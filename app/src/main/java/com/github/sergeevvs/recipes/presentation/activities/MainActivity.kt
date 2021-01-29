@@ -1,7 +1,8 @@
-package com.github.sergeevvs.recipes
+package com.github.sergeevvs.recipes.presentation.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.github.sergeevvs.recipes.R
 
 class MainActivity : AppCompatActivity() {
 
