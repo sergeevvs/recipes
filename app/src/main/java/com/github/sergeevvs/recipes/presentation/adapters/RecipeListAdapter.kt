@@ -1,23 +1,25 @@
 package com.github.sergeevvs.recipes.presentation.adapters
 
-import com.github.sergeevvs.recipes.presentation.adapters.viewholders.RecipeViewHolder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.github.sergeevvs.recipes.databinding.FragmentRecipeBinding
+import com.github.sergeevvs.recipes.databinding.RecipeBinding
+import com.github.sergeevvs.recipes.presentation.adapters.viewholders.RecipeViewHolder
 import com.github.sergeevvs.recipes.presentation.models.Recipe
 
-
 class RecipeListAdapter(
-    private val values: List<Recipe>
-) : RecyclerView.Adapter<RecipeViewHolder>() {
+    private val items: List<Recipe>
+) : UpdatableAdapter<Recipe, RecipeViewHolder>(items) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder =
-        RecipeViewHolder(FragmentRecipeBinding.inflate(LayoutInflater.from(parent.context)))
+        RecipeViewHolder(RecipeBinding.inflate(LayoutInflater.from(parent.context)))
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-
+        val item = getItemByIndex(position)
+        bindItem(holder, item)
     }
 
-    override fun getItemCount(): Int = values.size
+    private fun bindItem(holder: RecipeViewHolder, item: Recipe) {
+        // todo add binding recipe item after refactoring recipe.xml
+    }
 }
