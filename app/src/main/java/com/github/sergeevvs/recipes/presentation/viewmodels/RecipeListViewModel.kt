@@ -1,24 +1,15 @@
 package com.github.sergeevvs.recipes.presentation.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.github.sergeevvs.recipes.data.repositories.RecipeRepository
 import com.github.sergeevvs.recipes.presentation.models.Recipe
+import kotlinx.coroutines.launch
 
-class RecipeListViewModel : ViewModel() {
+class RecipeListViewModel(private val repository: RecipeRepository) : ViewModel() {
 
-    private val _recipeList: MutableLiveData<List<Recipe>> by lazy {
-        MutableLiveData<List<Recipe>>().also {
-            loadRecipeList()
-        }
+    val recipeList: LiveData<List<Recipe>> = repository.allRecipes.asLiveData()
+
+    fun insert(recipe: Recipe) = viewModelScope.launch {
+        repository.insert(recipe)
     }
-
-    val recipeList: LiveData<List<Recipe>>
-        get() = _recipeList
-
-    private fun loadRecipeList() {
-//        TODO("Not yet implemented")
-    }
-
-
 }
