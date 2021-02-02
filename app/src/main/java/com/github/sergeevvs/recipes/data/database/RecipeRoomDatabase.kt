@@ -29,7 +29,7 @@ abstract class RecipeRoomDatabase : RoomDatabase() {
                     context.applicationContext,
                     RecipeRoomDatabase::class.java,
                     "recipe_database"
-                ).build()
+                ).addCallback(RecipeDatabaseCallback(scope)).build()
                 INSTANCE = instance
                 return instance
             }
@@ -52,7 +52,7 @@ abstract class RecipeRoomDatabase : RoomDatabase() {
         suspend fun populateDatabase(recipeDao: RecipeDao) {
             recipeDao.deleteAll()
 
-            var recipe = Recipe(1,"Title", "Description")
+            var recipe = Recipe(1, "Title", "Description")
             recipeDao.insert(recipe)
 
             recipe = Recipe(2, "Title2", "Description2")
