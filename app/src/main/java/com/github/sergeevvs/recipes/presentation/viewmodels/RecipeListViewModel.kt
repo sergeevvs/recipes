@@ -12,4 +12,12 @@ class RecipeListViewModel(private val repository: RecipeRepository) : ViewModel(
     fun insert(recipe: Recipe) = viewModelScope.launch {
         repository.insert(recipe)
     }
+
+    fun deleteAll() = viewModelScope.launch {
+        repository.deleteAll()
+    }
+
+    fun insertMock() = viewModelScope.launch {
+        repository.insertMock()
+    }
 }

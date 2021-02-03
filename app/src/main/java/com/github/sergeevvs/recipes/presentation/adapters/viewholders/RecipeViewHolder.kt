@@ -16,6 +16,8 @@ class RecipeViewHolder(val binding: RecipeBinding) : RecyclerView.ViewHolder(bin
     companion object {
 
         fun create(parent: ViewGroup) =
-            RecipeViewHolder(RecipeBinding.inflate(LayoutInflater.from(parent.context)))
+            RecipeViewHolder(RecipeBinding.inflate(LayoutInflater.from(parent.context),
+                parent,
+                false))
     }
 }

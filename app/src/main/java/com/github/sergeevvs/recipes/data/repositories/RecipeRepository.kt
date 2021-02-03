@@ -14,4 +14,32 @@ class RecipeRepository(private val recipeDao: RecipeDao) {
     suspend fun insert(recipe: Recipe) {
         recipeDao.insert(recipe)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteAll() {
+        recipeDao.deleteAll()
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun insertMock() {
+        for (_recipe in listOf(
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description"),
+            Recipe(title = "Mock title", description = "Mock description")
+        ))
+            recipeDao.insert(_recipe)
+    }
 }

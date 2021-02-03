@@ -32,12 +32,16 @@ class RecipeListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.activity)
 
-        model.recipeList.observe(viewLifecycleOwner, { recipeList ->
-            recipeList?.let { adapter.submitList(recipeList) }
-        })
+        model.recipeList.observe(viewLifecycleOwner) { recipeList ->
+            recipeList.let { adapter.submitList(it) }
+        }
 
-        binding.fab.setOnClickListener {
+        binding.fabCreateNewRecipe.setOnClickListener {
             findNavController().navigate(R.id.action_recipeListFragment_to_newRecipeFragment)
+        }
+
+        binding.fabDeleteAllRecipes.setOnClickListener {
+            model.deleteAll()
         }
 
         return binding.root
