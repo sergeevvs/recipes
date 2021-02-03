@@ -3,6 +3,7 @@
 
     <style name="Widget.Recipe.CardView" parent="Widget.MaterialComponents.CardView">
         <item name="shapeAppearance">@style/ShapeAppearance.Recipe.MediumComponent</item>
+        <item name="cardForegroundColor">@color/cardview_shadow_end_color</item>
     </style>
 
     <style name="ShapeAppearance.Recipe.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
