@@ -20,23 +20,29 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/big_padding"
                 android:hint="@string/recipe_title"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:maxLines="1"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:maxLength="30"
+                    android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etRecipeDescription"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/big_padding"
+                android:layout_height="0dp"
+                android:layout_marginVertical="@dimen/big_padding"
                 android:hint="@string/recipe_description"
+                app:counterEnabled="true"
+                app:counterMaxLength="500"
+                app:layout_constraintBottom_toTopOf="@id/btnCreate"
                 app:layout_constraintEnd_toEndOf="@id/etRecipeTitle"
                 app:layout_constraintStart_toStartOf="@id/etRecipeTitle"
                 app:layout_constraintTop_toBottomOf="@id/etRecipeTitle">
@@ -44,21 +50,21 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLines="5"
+                    android:maxLength="500"
                     android:scrollbars="vertical" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCreate"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/big_padding"
+                android:layout_margin="@dimen/big_padding"
                 android:text="@string/create"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etRecipeDescription" />
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </FrameLayout>

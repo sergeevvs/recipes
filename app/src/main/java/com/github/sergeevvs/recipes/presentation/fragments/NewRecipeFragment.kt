@@ -5,19 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.github.sergeevvs.recipes.App
 import com.github.sergeevvs.recipes.R
-import com.github.sergeevvs.recipes.RecipeApplication
 import com.github.sergeevvs.recipes.databinding.FragmentNewRecipeBinding
-import com.github.sergeevvs.recipes.presentation.models.Recipe
-import com.github.sergeevvs.recipes.presentation.viewmodels.RecipeListViewModel
-import com.github.sergeevvs.recipes.presentation.viewmodels.factories.RecipeListViewModelFactory
+import com.github.sergeevvs.recipes.presentation.viewmodels.RecipeViewModel
 
 class NewRecipeFragment : Fragment() {
 
-    private val model: RecipeListViewModel by viewModels {
-        RecipeListViewModelFactory((activity?.application as RecipeApplication).repository)
+    private val viewModel: RecipeViewModel by activityViewModels {
+        (context?.applicationContext as App).viewModelFactory
     }
 
     override fun onCreateView(
@@ -25,15 +23,21 @@ class NewRecipeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+
         val binding = FragmentNewRecipeBinding.inflate(layoutInflater)
 
+        /*viewModel.recipe.observe(viewLifecycleOwner) { recipe ->
+            recipe?.let {
+                binding.etRecipeTitle.editText?.setText(it.title)
+                binding.etRecipeDescription.editText?.setText(it.description)
+            }
+        }*/
+
         binding.btnCreate.setOnClickListener {
-            val recipe = Recipe(
-                title = binding.etRecipeTitle.editText?.text.toString(),
-                description = binding.etRecipeDescription.editText?.text.toString()
+            viewModel.createRecipe(
+                title = binding.etRecipeTitle.editText.toString(),
+                description = binding.etRecipeDescription.editText.toString()
             )
-            if (recipe.title == "") model.insertMock()
-            else model.insert(recipe)
             findNavController().navigate(R.id.action_newRecipeFragment_to_recipeListFragment)
         }
 

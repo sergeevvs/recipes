@@ -5,26 +5,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.sergeevvs.recipes.App
 import com.github.sergeevvs.recipes.R
-import com.github.sergeevvs.recipes.RecipeApplication
 import com.github.sergeevvs.recipes.databinding.FragmentRecipeListBinding
 import com.github.sergeevvs.recipes.presentation.adapters.RecipeListAdapter
-import com.github.sergeevvs.recipes.presentation.viewmodels.RecipeListViewModel
-import com.github.sergeevvs.recipes.presentation.viewmodels.factories.RecipeListViewModelFactory
+import com.github.sergeevvs.recipes.presentation.viewmodels.RecipeViewModel
 
 class RecipeListFragment : Fragment() {
 
-    private val model: RecipeListViewModel by viewModels {
-        RecipeListViewModelFactory((activity?.application as RecipeApplication).repository)
+    private val viewModel: RecipeViewModel by activityViewModels {
+        (context?.applicationContext as App).viewModelFactory
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+
         val binding = FragmentRecipeListBinding.inflate(layoutInflater)
 
         val recyclerView = binding.rvRecipeList
@@ -32,8 +32,8 @@ class RecipeListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.activity)
 
-        model.recipeList.observe(viewLifecycleOwner) { recipeList ->
-            recipeList.let { adapter.submitList(it) }
+        viewModel.recipeList.observe(viewLifecycleOwner) { recipeList ->
+            recipeList?.let { adapter.submitList(it) }
         }
 
         binding.fabCreateNewRecipe.setOnClickListener {
@@ -41,7 +41,7 @@ class RecipeListFragment : Fragment() {
         }
 
         binding.fabDeleteAllRecipes.setOnClickListener {
-            model.deleteAll()
+            viewModel.deleteAll()
         }
 
         return binding.root

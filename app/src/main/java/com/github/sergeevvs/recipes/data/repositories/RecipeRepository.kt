@@ -5,40 +5,31 @@ import com.github.sergeevvs.recipes.data.database.dao.RecipeDao
 import com.github.sergeevvs.recipes.presentation.models.Recipe
 import kotlinx.coroutines.flow.Flow
 
+@WorkerThread
 class RecipeRepository(private val recipeDao: RecipeDao) {
 
-    val allRecipes: Flow<List<Recipe>> = recipeDao.getRecipeList()
+    val flowRecipeList: Flow<List<Recipe>> = recipeDao.getFlowRecipeList()
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insert(recipe: Recipe) {
-        recipeDao.insert(recipe)
-    }
-
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun deleteAll() {
-        recipeDao.deleteAll()
-    }
-
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
+    suspend fun insert(recipe: Recipe) = recipeDao.insert(recipe)
+    suspend fun deleteAll() = recipeDao.deleteAll()
     suspend fun insertMock() {
+        val mockRecipe = Recipe(title = "Mock title", description = "Mock description")
         for (_recipe in listOf(
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description"),
-            Recipe(title = "Mock title", description = "Mock description")
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe,
+            mockRecipe
         ))
             recipeDao.insert(_recipe)
     }
