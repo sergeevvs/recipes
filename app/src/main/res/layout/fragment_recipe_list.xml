@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRecipeList"
+        android:id="@+id/rv_recipe_list"
         android:name="com.github.sergeevvs.recipes.presentation.fragments.RecipeListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,7 +22,7 @@
         tools:listitem="@layout/recipe" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabCreateNewRecipe"
+        android:id="@+id/fab_new_recipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -37,7 +37,7 @@
         app:maxImageSize="36dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabDeleteAllRecipes"
+        android:id="@+id/fab_delete_all_recipes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -48,6 +48,6 @@
         app:borderWidth="1dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/fabCreateNewRecipe"
+        app:layout_constraintEnd_toStartOf="@id/fab_new_recipe"
         app:maxImageSize="36dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

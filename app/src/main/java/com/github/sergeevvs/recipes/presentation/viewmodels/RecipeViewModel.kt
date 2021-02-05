@@ -1,6 +1,7 @@
 package com.github.sergeevvs.recipes.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.sergeevvs.recipes.domain.interactors.RecipeInteractor
@@ -10,6 +11,11 @@ import kotlinx.coroutines.launch
 class RecipeViewModel(private val interactor: RecipeInteractor) : ViewModel() {
 
     val recipeList: LiveData<List<Recipe>> = interactor.getLiveDataRecipeList()
+    private val currentRecipe = MutableLiveData<Recipe>()
+
+    fun getCurrentRecipe(): LiveData<Recipe> = currentRecipe
+
+    fun setCurrentRecipe() {}
 
     fun createRecipe(title: String, description: String) {
         viewModelScope.launch {

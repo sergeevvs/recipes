@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.sergeevvs.recipes.databinding.RecipeBinding
 import com.github.sergeevvs.recipes.presentation.models.Recipe
 
-class RecipeViewHolder(val binding: RecipeBinding) : RecyclerView.ViewHolder(binding.root) {
+class RecipeViewHolder(private val binding: RecipeBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(recipe: Recipe) {
         binding.itemTitle.text = recipe.title

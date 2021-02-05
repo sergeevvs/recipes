@@ -9,14 +9,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.github.sergeevvs.recipes.App
 import com.github.sergeevvs.recipes.R
-import com.github.sergeevvs.recipes.databinding.FragmentNewRecipeBinding
+import com.github.sergeevvs.recipes.databinding.FragmentRecipeBinding
 import com.github.sergeevvs.recipes.presentation.viewmodels.RecipeViewModel
 
-class NewRecipeFragment : Fragment() {
+class RecipeFragment : Fragment() {
 
     private val viewModel: RecipeViewModel by activityViewModels {
         (context?.applicationContext as App).viewModelFactory
     }
+    private lateinit var binding: FragmentRecipeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,23 +25,28 @@ class NewRecipeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
-        val binding = FragmentNewRecipeBinding.inflate(layoutInflater)
+        binding = FragmentRecipeBinding.inflate(layoutInflater)
 
-        /*viewModel.recipe.observe(viewLifecycleOwner) { recipe ->
+        viewModel.getCurrentRecipe().observe(viewLifecycleOwner) { recipe ->
             recipe?.let {
                 binding.etRecipeTitle.editText?.setText(it.title)
                 binding.etRecipeDescription.editText?.setText(it.description)
             }
-        }*/
+        }
 
         binding.btnCreate.setOnClickListener {
             viewModel.createRecipe(
-                title = binding.etRecipeTitle.editText.toString(),
-                description = binding.etRecipeDescription.editText.toString()
+                title = binding.etRecipeTitle.editText?.text.toString(),
+                description = binding.etRecipeDescription.editText?.text.toString()
             )
-            findNavController().navigate(R.id.action_newRecipeFragment_to_recipeListFragment)
+            findNavController().navigate(R.id.action_recipeFragment_to_recipeListFragment)
         }
 
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.
     }
 }
