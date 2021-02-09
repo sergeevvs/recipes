@@ -12,15 +12,37 @@ class RecipeViewModel(private val interactor: RecipeInteractor) : ViewModel() {
 
     val recipeList: LiveData<List<Recipe>> = interactor.getLiveDataRecipeList()
     private val currentRecipe = MutableLiveData<Recipe>()
+    var isNewRecipe: Boolean = false
 
     fun getCurrentRecipe(): LiveData<Recipe> = currentRecipe
 
-    fun setCurrentRecipe() {}
+    fun updateRecipeState(title: String, description: String) {
+        currentRecipe.value?.let {
+            it.title = title
+            it.description = description
+        }
+    }
 
-    fun createRecipe(title: String, description: String) {
+    fun setCurrentRecipe(recipe: Recipe? = null) {
+        if (recipe == null) {
+            isNewRecipe = true
+            currentRecipe.value = Recipe()
+        } else {
+            isNewRecipe = false
+            currentRecipe.value = recipe.copy()
+        }
+    }
+
+    fun createRecipe() {
         viewModelScope.launch {
-            if (title.isEmpty()) interactor.createMockRecipes()
-            else interactor.createRecipe(Recipe(title = title, description = description))
+            if (currentRecipe.value?.title == "") interactor.createMockRecipes()
+            else currentRecipe.value?.let { interactor.createRecipe(it) }
+        }
+    }
+
+    fun updateRecipe() {
+        viewModelScope.launch {
+            currentRecipe.value?.let { interactor.updateRecipe(it) }
         }
     }
 

@@ -27,6 +27,8 @@ class RecipeFragment : Fragment() {
 
         binding = FragmentRecipeBinding.inflate(layoutInflater)
 
+        if (!viewModel.isNewRecipe) binding.btnCreate.text = getString(R.string.update)
+
         viewModel.getCurrentRecipe().observe(viewLifecycleOwner) { recipe ->
             recipe?.let {
                 binding.etRecipeTitle.editText?.setText(it.title)
@@ -35,18 +37,21 @@ class RecipeFragment : Fragment() {
         }
 
         binding.btnCreate.setOnClickListener {
-            viewModel.createRecipe(
-                title = binding.etRecipeTitle.editText?.text.toString(),
-                description = binding.etRecipeDescription.editText?.text.toString()
-            )
-            findNavController().navigate(R.id.action_recipeFragment_to_recipeListFragment)
+            val title = binding.etRecipeTitle.editText?.text.toString()
+            val description = binding.etRecipeDescription.editText?.text.toString()
+            viewModel.updateRecipeState(title, description)
+            if (viewModel.isNewRecipe) viewModel.createRecipe()
+            else viewModel.updateRecipe()
+            findNavController().navigateUp()
         }
 
         return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val title = binding.etRecipeTitle.editText?.text.toString()
+        val description = binding.etRecipeDescription.editText?.text.toString()
+        viewModel.updateRecipeState(title, description)
     }
 }

@@ -30,7 +30,7 @@ class RecipeListFragment : Fragment() {
         val binding = FragmentRecipeListBinding.inflate(layoutInflater)
 
         val recyclerView = binding.rvRecipeList
-        val adapter = RecipeListAdapter()
+        val adapter = RecipeListAdapter(this::onRecipeCardClickListener)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this.activity)
 
@@ -39,6 +39,7 @@ class RecipeListFragment : Fragment() {
         }
 
         binding.fabNewRecipe.setOnClickListener {
+            viewModel.setCurrentRecipe()
             findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment)
         }
 
@@ -48,4 +49,10 @@ class RecipeListFragment : Fragment() {
 
         return binding.root
     }
+
+    private fun onRecipeCardClickListener(recipe: Recipe) {
+        viewModel.setCurrentRecipe(recipe)
+        findNavController().navigate(R.id.action_recipeListFragment_to_recipeFragment)
+    }
+
 }

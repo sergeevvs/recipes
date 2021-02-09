@@ -9,7 +9,7 @@ class RecipeInteractor(private val recipeRepository: RecipeRepository) {
 
     fun getLiveDataRecipeList() = recipeRepository.flowRecipeList.asLiveData()
     suspend fun createRecipe(recipe: Recipe) = recipeRepository.insert(recipe)
+    suspend fun updateRecipe(recipe: Recipe) = recipeRepository.update(recipe)
     suspend fun deleteAllRecipes() = recipeRepository.deleteAll()
     suspend fun createMockRecipes() = recipeRepository.insertMock()
-
 }
